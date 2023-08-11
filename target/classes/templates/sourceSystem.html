@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Customers</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+</head>
+<body>
+
+
+<script>
+var myData;
+function myFunction(myObject) {
+	myData={SourceSystem:myObject};
+	w3.displayObject("ss1", myData);
+	console.log();
+	$(':checkbox[data-val="1"]').attr('checked','')
+	w3.addStyle('#datarow','display','');
+}
+function loadDoc() {
+	w3.getHttpObject("/sourceSystem/", myFunction);
+}
+function callme(obj){
+	console.log($(obj).data('ss'));
+	document.forms[0].source_system.value=$(obj).data('ss');
+	document.forms[0].feed_active.value=obj.checked?1:0;
+	document.forms[0].submit();
+}
+</script>
+<form name='sssubmit' action='/updateSourceSystem' method='post' target="hiddenFrame">
+<input type='hidden' name='source_system'/>
+<input type='hidden' name='feed_active'/>
+</form>
+<iframe name='hiddenFrame' style="display:none"></iframe>
+<button type="button" onclick="loadDoc()">Change Content</button>
+
+	<div class="w3-container">
+	<h1>Source System</h1>
+	<input class='w3-input' oninput="w3.filterHTML('#ss1', '#ssrow', this.value)" placeholder="Search data" />
+	<br/>
+	<br/>
+	<table id="ss1" class='w3-table-all w3-card-4 w3-hoverable'>
+	  <tr>
+	    <th>Source System</th>
+	    <th>Active</th>
+	  </tr>
+	  <tbody id='datarow'>
+	  <tr w3-repeat="SourceSystem" id='ssrow' >
+	    <td>{{source_system}}</td>
+	    <td>{{feed_active}} <input type='checkbox' name='active' data-val='{{feed_active}}' data-ss='{{source_system}}' onclick='callme(this)'> </td>
+	  </tr>
+	  </tbody>
+	</table>
+	</div>
+</body>
+<script>
+w3.addStyle('#datarow','display','none');
+</script>
+</html>

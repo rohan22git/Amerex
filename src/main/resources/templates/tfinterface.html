@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Customers</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+<script>
+var mydata;
+function myFunction(myObject) {
+	mydata={SourceSystem:myObject};
+	console.log(myObject);
+	if(myObject.length<1)return;
+	const header=$("#ss1 tr:eq(0)");
+	const dataRow=$("#ss1 tr:eq(1)");
+	for(const x in myObject[0]){
+		console.log(x + ":"+ myObject[x]);
+		header.append("<th>"+x+"</th>")
+		dataRow.append("<td>{{"+x+"}}</td>")
+	}
+	for(const x in myObject){
+		for (const y in myObject[x]){
+			if(myObject[x][y]==undefined){
+				myObject[x][y]='';
+			}
+			console.log(y)
+		}
+	}
+	w3.addStyle('#datarow','display','');
+	
+	w3.displayObject("ss1", mydata);
+	
+}
+function loadDoc() {
+	w3.getHttpObject("/interfaceFetch?tran_id="+$(tran_id_search).val(), myFunction);
+}
+
+function convertTable(){
+	console.log()
+	$('#ss1 th').each(function(index,val){
+		$(convertedTable).append("<tr><td>"+$(val).text()+"</td></tr>")
+	});
+}
+
+</script>
+</head>
+<body>
+<p>welcome to interface</p>
+
+<input class='w3-input' placeholder="Search by tran_id" id='tran_id_search' name='tran_id_search' th:value="${defaultTranID}" />
+<button type="button" onclick="loadDoc()">Fetch Interface Data</button>
+
+	<div class="w3-container" style="overflow: auto;">
+	<br/>
+	<br/>
+	<table id="ss1" class='w3-table-all w3-card-4 w3-hoverable'>
+	  <tr>
+	  </tr>
+	  <tbody id='datarow'>
+		  <tr w3-repeat="SourceSystem">
+		  </tr>
+	  </tbody>
+	</table>
+	</div>
+	<p>something</p>
+	<button onclick='convertTable()'>Convert</button>
+	<table id='convertedTable' border=1>
+	</table>
+</body>
+<script>
+w3.addStyle('#datarow','display','none');
+</script>
+</html>

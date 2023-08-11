@@ -1,0 +1,119 @@
+<html>
+<head>
+  <title>Upload Amerex Files</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <div th:replace="~{bootstrap}"></div>
+</head>
+<body>
+<!-- This style is only for logout button -->
+<style>
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+</style>
+	<div class='container-fluid p-4'>
+	<form action="/upload" enctype="multipart/form-data" method="POST" autocomplete="off">
+		<p class='h1 bg-primary text-white'>Amerex File Merger</p>
+		<div th:replace="~{::blankRow}" ></div>
+		<div class='row'>
+			<div class='col'>
+			<div class="form-group">
+	        	<label class="input-group-text">Header File</label>
+	        	<input type="file" name="file1" class="form-control-file" required>
+			</div>
+			</div>
+		</div>
+		<div th:replace="~{::blankRow}" ></div>
+		<div class='row'>
+			<div class='col'>
+			<div class="form-group">
+				<label class="input-group-text">Broker File</label>
+				<input type="file" name="file2" class="form-control-file" required>
+			</div>
+			</div>
+		</div>
+		<div class='row' th:fragment='blankRow'>
+			<div class='col'>
+			<span>&nbsp;</span>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col'>
+	        	<button  type="submit" class="btn btn-warning">Download Merged File</button>
+			</div>
+		</div>
+		<div th:replace="~{::blankRow}" ></div>
+		
+		<div class='d-flex flex-row-reverse'>
+		<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#AmerexConfig">
+  			Show Config Options
+		</button>
+		</div>
+		
+		
+	<div class="offcanvas offcanvas-end" id="AmerexConfig">
+		<div class="offcanvas-header">
+			<h3 class="offcanvas-title">Config</h3>
+			<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+		</div>
+		<div class="offcanvas-body ">
+			<div class="form-floating mb-3 mt-3">
+				<input type="text" id='seperator' placeholder="Field Sperator" name="seperator" class="form-control" th:value="${amerexConfig.seperator}" >
+				<label>Field Seperator</label>
+			</div>
+			<div class="form-floating mb-3 mt-3">
+				<input placeholder="Unique Col (Header,Broker)" type="text" name="uniqueCol" class="form-control" th:value="${amerexConfig.uniqueCol}">
+				<label>Unique Col (Header,Broker)</label>
+			</div>
+			<div class="form-floating mb-3 mt-3">
+				<input placeholder="Number Cols Header" type="text" name="numberCols" class="form-control" th:value="${amerexConfig.numberCols}">
+				<label>Number Cols Header</label>
+			</div>
+			<div class="form-floating mb-3 mt-3">
+				<input placeholder="Number Cols Broker" type="text" name="numberColsBroker" class="form-control" th:value="${amerexConfig.numberColsBroker}">
+				<label>Number Cols Broker</label>
+			</div>
+			<div class="form-floating mb-3 mt-3">
+				<input placeholder="Date Cols" type="text" name="dateCols" class="form-control" th:value="${amerexConfig.dateCols}">
+				<label>Date Cols</label>
+			</div>
+			<div class="form-floating mb-3 mt-3">
+				<input placeholder="Ignore Header Cols" type="text" name="ignoreHeaderCols" class="form-control" th:value="${amerexConfig.ignoreHeaderCols}">
+				<label>Ignore Header Cols</label>
+			</div>
+			<div class="form-floating mb-3 mt-3">
+				<input placeholder="Ignore Broker Cols" type="text" name="ignoreBrokerCols" class="form-control" th:value="${amerexConfig.ignoreBrokerCols}">
+				<label>Ignore Broker Cols</label>
+			</div>
+			<div class="form-floating mb-3 mt-3">
+				<input placeholder="Header Cols Count" type="text" name="headerCount" class="form-control" th:value="${amerexConfig.headerCount}">
+				<label>Header Col Count</label>
+			</div>
+			<div class="form-floating mb-3 mt-3">
+				<input placeholder="Broker Cols Count" type="text" name="brokerCount" class="form-control" th:value="${amerexConfig.brokerCount}">
+				<label>Broker Cols Count</label>
+			</div>
+			<button class="btn btn-warning" type="button" data-bs-dismiss="offcanvas">Save</button>
+			<button class="btn btn-danger" type="reset">Reset</button>
+		</div>
+	</div>
+		
+		<!-- logout button -->		
+	<a href="/logout">
+	Logout
+	</a>
+	
+	</form>
+	</div>
+</body>
+</html>
